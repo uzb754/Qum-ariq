@@ -1,0 +1,3107 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="description" id="metaDesc" content="QUM-ARIQ MFY — zamonaviy mahalla axborot portali">
+<title id="siteTitle">QUM-ARIQ MFY | Mahalla Portali</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root{
+    --bg: #0a0a0a;
+    --bg2: #121212;
+    --card: rgba(255, 255, 255, 0.04);
+    --card2: rgba(255, 255, 255, 0.07);
+    --text: #ffffff;
+    --muted: #a0a0a0;
+    --line: rgba(255, 255, 255, 0.12);
+
+    --accent: #ffffff;
+    --accent-inverse: #000000;
+    --status-open: #ffffff;
+    --status-closed: #666666;
+
+    --shadow: 0 30px 100px rgba(0,0,0,0.8);
+    --radius: 26px;
+}
+
+[data-theme="light"]{
+    --bg: #ffffff;
+    --bg2: #f4f4f4;
+    --card: rgba(0, 0, 0, 0.03);
+    --card2: rgba(0, 0, 0, 0.06);
+    --text: #000000;
+    --muted: #666666;
+    --line: rgba(0, 0, 0, 0.12);
+
+    --accent: #000000;
+    --accent-inverse: #ffffff;
+    --status-open: #000000;
+    --status-closed: #999999;
+    --shadow: 0 25px 70px rgba(0,0,0,0.08);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    color:var(--text);
+    background: var(--bg);
+    overflow-x:hidden;
+    transition:.3s;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+/* BACKGROUND */
+.background{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-5;
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+    opacity:.04;
+    background-image:
+        linear-gradient(var(--text) 1px,transparent 1px),
+        linear-gradient(90deg,var(--text) 1px,transparent 1px);
+    background-size:55px 55px;
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.08;
+    animation:orbMove 16s ease-in-out infinite alternate;
+}
+
+.orb1{ width:400px; height:400px; background:var(--text); left:-150px; top:80px; }
+.orb2{ width:350px; height:350px; background:var(--text); right:-140px; top:35%; animation-delay:-5s; }
+.orb3{ width:330px; height:330px; background:var(--text); left:40%; bottom:-180px; animation-delay:-9s; }
+
+@keyframes orbMove{
+    0%{transform:translate(0,0) scale(1)}
+    50%{transform:translate(50px,-30px) scale(1.1)}
+    100%{transform:translate(-30px,40px) scale(.95)}
+}
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:var(--text);
+    opacity:.2;
+    animation:particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+    from{ transform:translateY(110vh); opacity:0; }
+    15%{opacity:.3}
+    85%{opacity:.3}
+    to{ transform:translateY(-20vh); opacity:0; }
+}
+
+/* HEADER */
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    border-bottom:1px solid var(--line);
+    background:rgba(10,10,10,.8);
+    backdrop-filter:blur(25px);
+}
+
+[data-theme="light"] header{
+    background:rgba(255,255,255,.8);
+}
+
+.nav{
+    width:min(1320px,calc(100% - 34px));
+    height:78px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-mark{
+    width:46px;
+    height:46px;
+    border-radius:15px;
+    display:grid;
+    place-items:center;
+    font-size:23px;
+    background: var(--text);
+    color: var(--accent-inverse);
+    position:relative;
+}
+
+.logo-mark:after{
+    content:"";
+    position:absolute;
+    inset:-4px;
+    border-radius:18px;
+    border:1px solid var(--line);
+    animation:spin 8s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+.logo-title{
+    font-family:Manrope;
+    font-weight:800;
+    letter-spacing:.5px;
+    font-size:15px;
+}
+
+.logo-sub{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:2px;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.nav-links a{
+    color:var(--muted);
+    padding:10px 12px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:700;
+    transition:.25s;
+}
+
+.nav-links a:hover{
+    color:var(--text);
+    background:var(--line);
+}
+
+.nav-actions{
+    display:flex;
+    gap:7px;
+}
+
+.icon-button{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--text);
+    display:grid;
+    place-items:center;
+    font-size:15px;
+    font-weight:700;
+    transition:.25s;
+}
+
+.icon-button:hover{
+    transform:translateY(-3px);
+    border-color:var(--text);
+}
+
+.menu{ display:none; }
+
+/* CONTAINER & SECTIONS */
+.container{
+    width:min(1320px,calc(100% - 34px));
+    margin:auto;
+}
+
+section{ padding:45px 0; }
+
+/* HERO */
+.hero{ padding:75px 0 35px; }
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    gap:22px;
+}
+
+.hero-main{
+    min-height:520px;
+    border:1px solid var(--line);
+    border-radius:36px;
+    padding:52px;
+    position:relative;
+    overflow:hidden;
+    background: var(--card);
+    box-shadow:var(--shadow);
+}
+
+.hero-main:before{
+    content:"";
+    position:absolute;
+    width:420px;
+    height:420px;
+    right:-190px;
+    top:-180px;
+    border:1px solid var(--line);
+    border-radius:50%;
+}
+
+.hero-main:after{
+    content:"";
+    position:absolute;
+    width:7px;
+    height:120%;
+    top:-10%;
+    right:15%;
+    background:linear-gradient(transparent,var(--line),transparent);
+    transform:rotate(35deg);
+    animation:shine 6s linear infinite;
+}
+
+@keyframes shine{
+    from{right:120%}
+    to{right:-30%}
+}
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--card2);
+    color:var(--text);
+    font-size:11px;
+    font-weight:800;
+}
+
+.status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--text);
+    box-shadow:0 0 10px var(--text);
+}
+
+.status-dot.closed{
+    background:var(--muted);
+    box-shadow:none;
+}
+
+.hero h1{
+    position:relative;
+    z-index:2;
+    font-family:Manrope;
+    font-size:clamp(46px,7vw,82px);
+    line-height:.93;
+    letter-spacing:-4px;
+    margin:28px 0 22px;
+}
+
+.gradient{ color:var(--text); opacity: 0.7; }
+
+.hero-description{
+    max-width:690px;
+    color:var(--muted);
+    line-height:1.8;
+    font-size:15px;
+}
+
+.hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:32px;
+}
+
+.btn{
+    border:0;
+    padding:14px 18px;
+    border-radius:14px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-size:12px;
+    font-weight:800;
+    transition:.25s;
+}
+
+.btn:hover{ transform:translateY(-3px); }
+
+.btn-primary{
+    color:var(--accent-inverse);
+    background:var(--accent);
+    box-shadow:0 12px 35px rgba(0,0,0,.3);
+}
+
+.btn-glass{
+    color:var(--text);
+    background:var(--card2);
+    border:1px solid var(--line);
+}
+
+.hero-side{
+    display:grid;
+    grid-template-rows:1fr 1fr;
+    gap:18px;
+}
+
+.panel{
+    border:1px solid var(--line);
+    border-radius:27px;
+    background:var(--card);
+    box-shadow:var(--shadow);
+    padding:27px;
+}
+
+.label{
+    color:var(--muted);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1.5px;
+}
+
+.clock{
+    font-family:Manrope;
+    font-size:42px;
+    font-weight:800;
+    letter-spacing:-2px;
+    margin-top:12px;
+}
+
+.date{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:3px;
+}
+
+.today-status{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-top:1px solid var(--line);
+    margin-top:22px;
+    padding-top:18px;
+}
+
+.open{ color:var(--text); font-weight:800; }
+.closed{ color:var(--muted)!important; }
+
+/* SECTION HEAD */
+.section-head{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:20px;
+}
+
+.section-title{
+    font-family:Manrope;
+    font-size:28px;
+    letter-spacing:-1px;
+}
+
+.section-desc{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:6px;
+}
+
+/* SERVICES */
+.services{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+}
+
+.service{
+    min-height:150px;
+    position:relative;
+    padding:22px;
+    border:1px solid var(--line);
+    border-radius:22px;
+    background:var(--card);
+    overflow:hidden;
+    transition:.3s;
+}
+
+.service:before{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:var(--line);
+    right:-35px;
+    bottom:-40px;
+    transition:.3s;
+}
+
+.service:hover{
+    transform:translateY(-6px);
+    border-color:var(--text);
+    box-shadow:var(--shadow);
+}
+
+.service:hover:before{ transform:scale(1.7); }
+
+.service-icon{
+    width:46px;
+    height:46px;
+    border-radius:14px;
+    background:var(--card2);
+    border:1px solid var(--line);
+    display:grid;
+    place-items:center;
+    font-size:20px;
+    margin-bottom:17px;
+    filter: grayscale(100%);
+}
+
+.service h3{ font-size:14px; }
+.service p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:6px;
+    line-height:1.5;
+}
+
+.arrow{
+    position:absolute;
+    top:19px;
+    right:19px;
+    color:var(--muted);
+}
+
+/* SEARCH & FILTERS */
+.search{
+    position:relative;
+    margin-bottom:15px;
+}
+
+.search input{
+    width:100%;
+    padding:18px 52px;
+    border:1px solid var(--line);
+    border-radius:18px;
+    outline:none;
+    color:var(--text);
+    background:var(--card);
+    font-size:13px;
+    box-shadow:var(--shadow);
+}
+
+.search input:focus{ border-color:var(--text); }
+.search-icon{ position:absolute; left:19px; top:50%; transform:translateY(-50%); }
+
+.clear{
+    display:none;
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    background:transparent;
+    border:0;
+    color:var(--muted);
+    font-size:20px;
+}
+
+.filters{
+    display:flex;
+    gap:7px;
+    overflow:auto;
+    padding-bottom:5px;
+}
+
+.filter{
+    white-space:nowrap;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--muted);
+    padding:10px 14px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.filter.active{
+    color:var(--accent-inverse);
+    background:var(--accent);
+    border-color:var(--accent);
+}
+
+/* CONTACTS */
+.contacts{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:17px;
+}
+
+.contact{
+    position:relative;
+    border:1px solid var(--line);
+    border-radius:23px;
+    background:var(--card);
+    padding:20px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.contact:hover{
+    transform:translateY(-5px);
+    box-shadow:var(--shadow);
+    border-color:var(--text);
+}
+
+.contact-top{ display:flex; justify-content:space-between; }
+
+.avatar{
+    width:50px;
+    height:50px;
+    display:grid;
+    place-items:center;
+    border-radius:16px;
+    background:var(--card2);
+    border:1px solid var(--line);
+    font-size:22px;
+    filter: grayscale(100%);
+}
+
+.star{
+    width:37px;
+    height:37px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--muted);
+    font-size:18px;
+}
+
+.star.active{ color:var(--text); background:var(--card2); }
+.contact-name{ font-size:15px; margin-top:17px; }
+.contact-role{
+    min-height:34px;
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.5;
+    margin-top:5px;
+}
+
+.phone{
+    padding:12px;
+    margin-top:14px;
+    border-radius:12px;
+    background:var(--card2);
+    font-size:12px;
+    font-weight:800;
+    border:1px solid var(--line);
+}
+
+.contact-buttons{ display:flex; gap:6px; margin-top:10px; }
+
+.small-btn{
+    flex:1;
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:10px 6px;
+    background:transparent;
+    color:var(--text);
+    font-size:10px;
+    font-weight:800;
+}
+
+.small-btn.call{
+    background:var(--text);
+    border-color:var(--text);
+    color:var(--accent-inverse);
+}
+
+/* IMPORTANT */
+.important{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.important-card{
+    border:1px solid var(--line);
+    border-radius:24px;
+    padding:25px;
+    background: var(--card);
+}
+
+.important-icon{ font-size:28px; filter: grayscale(100%); }
+.important-card h3{ font-size:15px; margin-top:15px; }
+.important-card p{ color:var(--muted); font-size:11px; margin-top:5px; }
+
+.big-number{
+    font-family:Manrope;
+    font-size:22px;
+    font-weight:800;
+    margin-top:14px;
+}
+
+/* HOURS */
+.hours-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.days{
+    border:1px solid var(--line);
+    border-radius:24px;
+    padding:23px;
+    background:var(--card);
+}
+
+.day{
+    display:flex;
+    justify-content:space-between;
+    padding:13px 0;
+    border-bottom:1px solid var(--line);
+    font-size:12px;
+}
+
+.day:last-child{ border:0; }
+.day.today{ color:var(--text); font-weight:800; }
+
+/* LOCATION */
+.location-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.address{
+    border:1px solid var(--line);
+    border-radius:24px;
+    padding:25px;
+    background:var(--card);
+}
+
+.address-item{
+    display:flex;
+    gap:13px;
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.address-item:last-child{ border:0; }
+
+.address-icon{
+    width:40px;
+    height:40px;
+    flex-shrink:0;
+    display:grid;
+    place-items:center;
+    border-radius:13px;
+    background:var(--card2);
+    border:1px solid var(--line);
+    filter: grayscale(100%);
+}
+
+.address-item span{
+    display:block;
+    color:var(--muted);
+    font-size:10px;
+    margin-bottom:4px;
+}
+
+.address-item strong{ font-size:12px; line-height:1.55; }
+
+.map{
+    min-height:350px;
+    border:1px solid var(--line);
+    border-radius:24px;
+    overflow:hidden;
+    position:relative;
+    background:
+        linear-gradient(rgba(0,0,0,.85),rgba(0,0,0,.9)),
+        url("https://images.unsplash.com/photo-1524666041070-9cff9988f9d2?auto=format&fit=crop&w=1400&q=80")
+        center/cover;
+    filter: grayscale(100%);
+}
+
+.map-content{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.map-pin{ font-size:55px; animation:pin 2s ease-in-out infinite; }
+
+@keyframes pin{ 50%{transform:translateY(-9px)} }
+
+/* CREATOR */
+.creator-section{ padding-top:60px; }
+
+.creator{
+    position:relative;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:32px;
+    padding:35px;
+    background:var(--card);
+    box-shadow:var(--shadow);
+}
+
+.creator:before{
+    content:"";
+    position:absolute;
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    right:-100px;
+    bottom:-100px;
+}
+
+.creator-grid{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:30px;
+    align-items:center;
+}
+
+.creator-badge{
+    display:inline-flex;
+    padding:7px 11px;
+    border-radius:999px;
+    background:var(--card2);
+    border:1px solid var(--line);
+    color:var(--text);
+    font-size:10px;
+    font-weight:800;
+}
+
+.creator h2{
+    font-family:Manrope;
+    font-size:35px;
+    letter-spacing:-1.5px;
+    margin:14px 0 6px;
+}
+
+.creator-desc{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.7;
+}
+
+.creator-contact{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:20px;
+}
+
+.creator-pill{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:10px 13px;
+    background:var(--card2);
+    font-size:11px;
+    font-weight:700;
+}
+
+.creator-avatar{
+    width:130px;
+    height:130px;
+    border-radius:35px;
+    display:grid;
+    place-items:center;
+    font-size:65px;
+    background:var(--text);
+    color:var(--accent-inverse);
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+    transform:rotate(3deg);
+    transition:.4s;
+    filter: grayscale(100%);
+}
+
+.creator:hover .creator-avatar{ transform:rotate(-3deg) scale(1.04); }
+
+/* FOOTER */
+footer{
+    border-top:1px solid var(--line);
+    margin-top:60px;
+    padding:50px 0 100px;
+    background: var(--bg2);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-brand .logo-title { font-size: 18px; }
+
+.footer-brand p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    max-width: 320px;
+}
+
+.footer-col-title {
+    font-family: Manrope;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    color: var(--text);
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-links a, .footer-links span {
+    color: var(--muted);
+    font-size: 12px;
+    transition: .2s;
+}
+
+.footer-links a:hover {
+    color: var(--text);
+    transform: translateX(3px);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--line);
+    padding-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.footer-copyright { color: var(--muted); font-size: 11px; }
+.footer-creator-tag { font-size: 11px; color: var(--muted); }
+.footer-creator-tag strong { color: var(--text); }
+
+/* MODAL & LANG SELECTION */
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:3000;
+    background:rgba(0,0,0,.85);
+    backdrop-filter:blur(12px);
+    align-items:center;
+    justify-content:center;
+    padding:14px;
+}
+
+.modal.show{ display:flex; }
+
+.modal-box{
+    width:min(570px,100%);
+    max-height:82vh;
+    overflow:auto;
+    border:1px solid var(--line);
+    border-radius:29px;
+    background:var(--bg2);
+    padding:23px;
+    animation:modal .3s ease;
+}
+
+@keyframes modal{
+    from{ opacity:0; transform:translateY(30px); }
+    to{ opacity:1; transform:none; }
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.modal-head h2{ font-family:Manrope; font-size:21px; }
+
+.close{
+    width:38px;
+    height:38px;
+    border:1px solid var(--line);
+    border-radius:11px;
+    background:transparent;
+    color:var(--text);
+    font-size:18px;
+}
+
+.lang-options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:15px;
+}
+
+.lang-btn{
+    padding:16px;
+    border-radius:16px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--text);
+    font-weight:700;
+    font-size:14px;
+    text-align:left;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition:.2s;
+}
+
+.lang-btn:hover{
+    background:var(--card2);
+    border-color:var(--text);
+}
+
+/* TOAST */
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:30px;
+    transform:translate(-50%,30px);
+    opacity:0;
+    pointer-events:none;
+    z-index:6000;
+    color:var(--accent-inverse);
+    background:var(--accent);
+    border:1px solid var(--line);
+    padding:13px 17px;
+    border-radius:14px;
+    font-size:11px;
+    font-weight:800;
+    box-shadow:0 20px 50px rgba(0,0,0,.6);
+    transition:.3s;
+}
+
+.toast.show{ opacity:1; transform:translate(-50%,0); }
+
+/* REVEAL */
+.reveal{ opacity:0; transform:translateY(25px); transition:.7s ease; }
+.reveal.visible{ opacity:1; transform:none; }
+
+/* MOBILE NAV */
+.mobile-nav{ display:none; }
+
+/* RESPONSIVE */
+@media(max-width:1050px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-side{ grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+    .services{ grid-template-columns:repeat(2,1fr); }
+    .contacts{ grid-template-columns:repeat(2,1fr); }
+    .footer-grid { grid-template-columns: 1fr; gap: 25px; }
+}
+
+@media(max-width:760px){
+    body{ padding-bottom:65px; }
+    .nav{ height:68px; }
+    .nav-links{
+        display:none;
+        position:absolute;
+        top:68px; left:10px; right:10px;
+        flex-direction:column;
+        padding:9px;
+        background:var(--bg2);
+        border:1px solid var(--line);
+        border-radius:18px;
+    }
+    .nav-links.show{ display:flex; }
+    .nav-links a{ width:100%; }
+    .menu{ display:grid; }
+    .hero{ padding-top:28px; }
+    .hero-main{ padding:30px 22px; min-height:450px; }
+    .hero h1{ font-size:48px; letter-spacing:-3px; }
+    .hero-side{ grid-template-columns:1fr; }
+    .services, .contacts, .important, .hours-grid, .location-grid{ grid-template-columns:1fr; }
+    .section{ padding:28px 0; }
+    .section-title{ font-size:24px; }
+    .creator{ padding:25px; }
+    .creator-grid{ grid-template-columns:1fr; }
+    .creator-avatar{ width:100px; height:100px; font-size:50px; order:-1; }
+    .creator h2{ font-size:28px; }
+    .footer-bottom{ flex-direction: column; align-items: flex-start; }
+    .mobile-nav{
+        position:fixed; display:grid; grid-template-columns:repeat(4,1fr);
+        bottom:0; left:0; right:0; z-index:2000; padding:8px;
+        background:rgba(10,10,10,.95); backdrop-filter:blur(20px);
+        border-top:1px solid var(--line);
+    }
+    .mobile-nav button{ border:0; background:transparent; color:var(--muted); font-size:9px; font-weight:800; }
+    .mobile-nav button span{ display:block; font-size:18px; margin-bottom:3px; }
+}
+
+@media(max-width:430px){
+    .container{ width:calc(100% - 22px); }
+    .hero h1{ font-size:39px; }
+    .hero-main{ padding:25px 18px; }
+    .creator-contact{ display:block; }
+    .creator-pill{ margin-bottom:7px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+    <div class="grid"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <div class="particle" style="left:8%;animation-duration:14s"></div>
+    <div class="particle" style="left:17%;animation-duration:18s;animation-delay:2s"></div>
+    <div class="particle" style="left:29%;animation-duration:12s;animation-delay:5s"></div>
+    <div class="particle" style="left:42%;animation-duration:20s;animation-delay:1s"></div>
+    <div class="particle" style="left:55%;animation-duration:15s;animation-delay:7s"></div>
+    <div class="particle" style="left:68%;animation-duration:18s;animation-delay:3s"></div>
+    <div class="particle" style="left:79%;animation-duration:13s;animation-delay:6s"></div>
+    <div class="particle" style="left:91%;animation-duration:17s;animation-delay:4s"></div>
+</div>
+
+
+<header>
+<div class="nav">
+
+    <a href="#home" class="logo">
+        <div class="logo-mark">🏘️</div>
+        <div>
+            <div class="logo-title" id="navLogoTitle">QUM-ARIQ MFY</div>
+            <div class="logo-sub" id="navLogoSub">MAHALLA PORTALI</div>
+        </div>
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+        <a href="#home" id="navHome">Bosh sahifa</a>
+        <a href="#services" id="navServices">Xizmatlar</a>
+        <a href="#contacts" id="navContacts">Kontaktlar</a>
+        <a href="#hours" id="navHours">Ish vaqti</a>
+        <a href="#creator" id="navCreator">Yaratuvchi</a>
+    </nav>
+
+    <div class="nav-actions">
+        <button class="icon-button" onclick="openLangModal()" id="langSelectorBtn" title="Tilni tanlash">UZ</button>
+        <button class="icon-button" onclick="openFavorites()">⭐</button>
+        <button class="icon-button" onclick="toggleTheme()">🌙</button>
+        <button class="icon-button menu" onclick="toggleMenu()">☰</button>
+    </div>
+
+</div>
+</header>
+
+
+<main id="home">
+
+<!-- HERO -->
+<section class="hero">
+<div class="container">
+
+<div class="hero-grid">
+
+    <div class="hero-main reveal">
+
+        <div class="status">
+            <span class="status-dot"></span>
+            <span id="statusText">Tekshirilmoqda...</span>
+        </div>
+
+        <h1>
+            <span id="heroTitle1">QUM-ARIQ</span><br>
+            <span class="gradient" id="heroTitle2">MAHALLASI</span>
+        </h1>
+
+        <p class="hero-description" id="heroDesc">
+            Qum-Ariq MFY aholisi uchun kerakli telefon raqamlari,
+            xizmatlar, ish vaqti, manzil va muhim ma'lumotlarni
+            zamonaviy yagona portal orqali toping.
+        </p>
+
+        <div class="hero-actions">
+
+            <a href="#contacts" class="btn btn-primary" id="btnContacts">
+                📞 Kontaktlar
+            </a>
+
+            <a href="#services" class="btn btn-glass" id="btnServices">
+                ⚡ Xizmatlar
+            </a>
+
+            <button onclick="shareSite()" class="btn btn-glass" id="btnShare">
+                ↗️ Ulashish
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-side">
+
+        <div class="panel reveal">
+
+            <div class="label" id="labelCurrentTime">HOZIRGI VAQT</div>
+
+            <div class="clock" id="clock">
+                00:00:00
+            </div>
+
+            <div class="date" id="date">
+                —
+            </div>
+
+            <div class="today-status">
+
+                <strong id="today">
+                    Bugun
+                </strong>
+
+                <span class="open" id="openText">
+                    —
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel reveal">
+
+            <div class="label" id="labelWorkHours">
+                MAHALLA ISH VAQTI
+            </div>
+
+            <h3 style="
+                font-family:Manrope;
+                font-size:26px;
+                margin-top:12px;
+            ">
+                09:00 — 18:00
+            </h3>
+
+            <p id="lunchTimeText" style="
+                color:var(--muted);
+                font-size:11px;
+                margin-top:7px;
+            ">
+                Tushlik: 13:00 — 14:00
+            </p>
+
+            <a
+                href="tel:+998712158424"
+                class="btn btn-primary"
+                id="btnCallMahalla"
+                style="width:100%;margin-top:20px;"
+            >
+                ☎️ Mahalla bilan bog‘lanish
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+</section>
+
+
+<!-- SERVICES -->
+<section id="services">
+<div class="container">
+
+    <div class="section-head reveal">
+        <div>
+            <div class="section-title" id="servicesTitle">⚡ Tezkor xizmatlar</div>
+            <div class="section-desc" id="servicesDesc">
+                Kerakli xizmatni bir bosishda toping
+            </div>
+        </div>
+    </div>
+
+
+    <div class="services">
+
+        <a href="#contacts"
+           onclick="setFilter('mahalla')"
+           class="service reveal">
+
+            <div class="service-icon">🏛️</div>
+            <div class="arrow">↗</div>
+
+            <h3 id="srvMahallaTitle">Mahalla</h3>
+            <p id="srvMahallaDesc">Rais va mahalla xodimlari</p>
+
+        </a>
+
+
+        <a href="#contacts"
+           onclick="setFilter('tibbiyot')"
+           class="service reveal">
+
+            <div class="service-icon">🏥</div>
+            <div class="arrow">↗</div>
+
+            <h3 id="srvPoliTitle">13-poliklinika</h3>
+            <p id="srvPoliDesc">Shifokor va registratura</p>
+
+        </a>
+
+
+        <a href="#contacts"
+           onclick="setFilter('maktab')"
+           class="service reveal">
+
+            <div class="service-icon">🏫</div>
+            <div class="arrow">↗</div>
+
+            <h3 id="srvSchoolTitle">269-maktab</h3>
+            <p id="srvSchoolDesc">Maktab direktori</p>
+
+        </a>
+
+
+        <a href="#contacts"
+           onclick="setFilter('xizmat')"
+           class="service reveal">
+
+            <div class="service-icon">⚡</div>
+            <div class="arrow">↗</div>
+
+            <h3 id="srvElecTitle">Elektr</h3>
+            <p id="srvElecDesc">Elektr tarmog‘i va 1154</p>
+
+        </a>
+
+
+        <a href="#contacts"
+           onclick="setFilter('xizmat')"
+           class="service reveal">
+
+            <div class="service-icon">💧</div>
+            <div class="arrow">↗</div>
+
+            <h3 id="srvWaterTitle">Ichimlik suvi</h3>
+            <p id="srvWaterDesc">Suv xodimi</p>
+
+        </a>
+
+
+        <a href="#contacts"
+           onclick="setFilter('xizmat')"
+           class="service reveal">
+
+            <div class="service-icon">🔥</div>
+            <div class="arrow">↗</div>
+
+            <h3 id="srvGasTitle">Gaz</h3>
+            <p id="srvGasDesc">Gaz xodimi</p>
+
+        </a>
+
+
+        <a href="#contacts"
+           onclick="setFilter('xizmat')"
+           class="service reveal">
+
+            <div class="service-icon">💊</div>
+            <div class="arrow">↗</div>
+
+            <h3 id="srvPharmTitle">Apteka</h3>
+            <p id="srvPharmDesc">Apteka xodimlari</p>
+
+        </a>
+
+
+        <a href="#location"
+           class="service reveal">
+
+            <div class="service-icon">📍</div>
+            <div class="arrow">↗</div>
+
+            <h3 id="srvLocTitle">Manzil</h3>
+            <p id="srvLocDesc">Qum-Ariq MFY</p>
+
+        </a>
+
+    </div>
+
+</div>
+</section>
+
+
+<!-- CONTACTS -->
+<section id="contacts">
+<div class="container">
+
+    <div class="section-head reveal">
+
+        <div>
+            <div class="section-title" id="contactsTitle">
+                📞 Kontaktlar
+            </div>
+
+            <div class="section-desc" id="contactsDesc">
+                Ism, lavozim yoki telefon orqali qidiring
+            </div>
+        </div>
+
+        <button
+            class="btn btn-glass"
+            onclick="openFavorites()"
+            id="btnFavorites"
+        >
+            ⭐ Saqlanganlar
+        </button>
+
+    </div>
+
+
+    <div class="search reveal">
+
+        <span class="search-icon">🔎</span>
+
+        <input
+            id="search"
+            type="text"
+            placeholder="Masalan: rais, Aziza, maktab, 1154..."
+            oninput="renderContacts()"
+        >
+
+        <button
+            class="clear"
+            id="clear"
+            onclick="clearSearch()"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="filters reveal">
+
+        <button
+            class="filter active"
+            data-filter="all"
+            onclick="setFilter('all')"
+            id="fltAll"
+        >
+            Barchasi
+        </button>
+
+        <button
+            class="filter"
+            data-filter="mahalla"
+            onclick="setFilter('mahalla')"
+            id="fltMahalla"
+        >
+            🏛️ Mahalla
+        </button>
+
+        <button
+            class="filter"
+            data-filter="tibbiyot"
+            onclick="setFilter('tibbiyot')"
+            id="fltTibbiyot"
+        >
+            🏥 Tibbiyot
+        </button>
+
+        <button
+            class="filter"
+            data-filter="maktab"
+            onclick="setFilter('maktab')"
+            id="fltMaktab"
+        >
+            🏫 Maktab
+        </button>
+
+        <button
+            class="filter"
+            data-filter="xizmat"
+            onclick="setFilter('xizmat')"
+            id="fltXizmat"
+        >
+            🔧 Xizmatlar
+        </button>
+
+        <button
+            class="filter"
+            data-filter="soliq"
+            onclick="setFilter('soliq')"
+            id="fltSoliq"
+        >
+            💼 Soliq
+        </button>
+
+        <button
+            class="filter"
+            data-filter="community"
+            onclick="setFilter('community')"
+            id="fltCommunity"
+        >
+            👥 Guruh
+        </button>
+
+    </div>
+
+
+    <div
+        class="contacts"
+        id="contactsGrid"
+    ></div>
+
+</div>
+</section>
+
+
+<!-- IMPORTANT NUMBERS -->
+<section>
+<div class="container">
+
+    <div class="section-head reveal">
+        <div>
+            <div class="section-title" id="impTitle">
+                🚨 Muhim raqamlar
+            </div>
+
+            <div class="section-desc" id="impDesc">
+                Tezkor foydalanish uchun
+            </div>
+        </div>
+    </div>
+
+
+    <div class="important">
+
+        <div class="important-card reveal">
+
+            <div class="important-icon">⚡</div>
+
+            <h3 id="impElecTitle">Elektr tarmog‘i</h3>
+
+            <p id="impElecDesc">
+                Sergeli tumani elektr tarmog‘i
+            </p>
+
+            <div class="big-number">
+                1154
+            </div>
+
+            <a
+                href="tel:1154"
+                class="btn btn-primary btnCallText"
+                style="margin-top:16px;"
+            >
+                ☎️ Qo‘ng‘iroq
+            </a>
+
+        </div>
+
+
+        <div class="important-card reveal">
+
+            <div class="important-icon">🏛️</div>
+
+            <h3 id="impMahallaTitle">Qum-Ariq MFY</h3>
+
+            <p id="impMahallaDesc">
+                Asosiy telefon
+            </p>
+
+            <div class="big-number">
+                71 215-84-24
+            </div>
+
+            <a
+                href="tel:+998712158424"
+                class="btn btn-primary btnCallText"
+                style="margin-top:16px;"
+            >
+                ☎️ Qo‘ng‘iroq
+            </a>
+
+        </div>
+
+
+        <div class="important-card reveal">
+
+            <div class="important-icon">☎️</div>
+
+            <h3 id="impAddTitle">Qo‘shimcha telefon</h3>
+
+            <p id="impAddDesc">
+                Qum-Ariq MFY
+            </p>
+
+            <div class="big-number">
+                71 251-41-45
+            </div>
+
+            <a
+                href="tel:+998712514145"
+                class="btn btn-primary btnCallText"
+                style="margin-top:16px;"
+            >
+                ☎️ Qo‘ng‘iroq
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+
+<!-- HOURS -->
+<section id="hours">
+<div class="container">
+
+    <div class="section-head reveal">
+
+        <div>
+            <div class="section-title" id="hoursTitle">
+                🕘 Ish vaqti
+            </div>
+
+            <div class="section-desc" id="hoursDesc">
+                Qum-Ariq MFY ish jadvali
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="hours-grid">
+
+        <div class="days reveal">
+
+            <div class="day" data-day="1">
+                <span id="dayMon">Dushanba</span>
+                <strong>09:00 — 18:00</strong>
+            </div>
+
+            <div class="day" data-day="2">
+                <span id="dayTue">Seshanba</span>
+                <strong>09:00 — 18:00</strong>
+            </div>
+
+            <div class="day" data-day="3">
+                <span id="dayWed">Chorshanba</span>
+                <strong>09:00 — 18:00</strong>
+            </div>
+
+            <div class="day" data-day="4">
+                <span id="dayThu">Payshanba</span>
+                <strong>09:00 — 18:00</strong>
+            </div>
+
+            <div class="day" data-day="5">
+                <span id="dayFri">Juma</span>
+                <strong>09:00 — 18:00</strong>
+            </div>
+
+            <div class="day" data-day="6">
+                <span id="daySat">Shanba</span>
+                <strong class="restText">Dam olish</strong>
+            </div>
+
+            <div class="day" data-day="0">
+                <span id="daySun">Yakshanba</span>
+                <strong class="restText">Dam olish</strong>
+            </div>
+
+        </div>
+
+
+        <div class="panel reveal">
+
+            <div class="label" id="labelTodayStatus">
+                BUGUNGI HOLAT
+            </div>
+
+            <h3
+                id="todayBig"
+                style="
+                font-family:Manrope;
+                font-size:27px;
+                margin-top:13px;
+                "
+            >
+                —
+            </h3>
+
+            <p id="hoursDetailDesc" style="
+                color:var(--muted);
+                font-size:12px;
+                line-height:1.7;
+                margin-top:10px;
+            ">
+                Ish kunlari 09:00 dan 18:00 gacha.
+                Tushlik vaqti 13:00–14:00.
+                Shanba va yakshanba dam olish kunlari.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+
+<!-- LOCATION -->
+<section id="location">
+<div class="container">
+
+    <div class="section-head reveal">
+
+        <div>
+            <div class="section-title" id="locTitle">
+                📍 Manzil
+            </div>
+
+            <div class="section-desc" id="locDesc">
+                Qum-Ariq MFY qo‘mitasi
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="location-grid">
+
+        <div class="address reveal">
+
+            <div class="address-item">
+
+                <div class="address-icon">
+                    📍
+                </div>
+
+                <div>
+                    <span id="lblAddress">MANZIL</span>
+
+                    <strong id="valAddress">
+                        100160, Toshkent shahri,
+                        Sirg‘ali tumani,
+                        Obiraxmat ko‘chasi, 23
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="address-item">
+
+                <div class="address-icon">
+                    🏫
+                </div>
+
+                <div>
+                    <span id="lblLandmark">MO‘LJAL</span>
+
+                    <strong id="valLandmark">
+                        “POWER HIGH SCHOOL” xususiy maktab,
+                        269-sonli maktab
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="address-item">
+
+                <div class="address-icon">
+                    ☎️
+                </div>
+
+                <div>
+                    <span id="lblPhone">TELEFON</span>
+
+                    <strong>
+                        +998 (71) 215-84-24<br>
+                        +998 (71) 251-41-45
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="address-item">
+
+                <div class="address-icon">
+                    🧾
+                </div>
+
+                <div>
+                    <span id="lblStir">STIR</span>
+
+                    <strong>
+                        20288****
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div style="
+                display:flex;
+                gap:8px;
+                flex-wrap:wrap;
+                margin-top:20px;
+            ">
+
+                <button
+                    class="btn btn-primary"
+                    onclick="openMap()"
+                    id="btnOpenMap"
+                >
+                    🗺️ Xaritani ochish
+                </button>
+
+                <button
+                    class="btn btn-glass"
+                    onclick="openDirections()"
+                    id="btnDirections"
+                >
+                    🚗 Yo‘nalish
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="map reveal">
+
+            <div class="map-content">
+
+                <div class="map-pin">
+                    📍
+                </div>
+
+                <h3 style="
+                    font-family:Manrope;
+                    font-size:23px;
+                ">
+                    QUM-ARIQ MFY
+                </h3>
+
+                <p id="mapTextAddress" style="
+                    color:var(--muted);
+                    font-size:11px;
+                    line-height:1.6;
+                    margin:8px 0 20px;
+                ">
+                    Obiraxmat ko‘chasi, 23<br>
+                    Sirg‘ali tumani, Toshkent
+                </p>
+
+                <button
+                    class="btn btn-primary"
+                    onclick="openDirections()"
+                    id="btnGetDir"
+                >
+                    🚗 Yo‘nalish olish
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+
+<!-- CREATOR -->
+<section id="creator" class="creator-section">
+<div class="container">
+
+    <div class="creator reveal">
+
+        <div class="creator-grid">
+
+            <div>
+
+                <div class="creator-badge">
+                    ✦ WEBSITE CREATOR
+                </div>
+
+                <h2 id="creatorName">
+                    Xojimurodov Jaloliddin
+                </h2>
+
+                <p class="creator-desc" id="creatorDesc">
+                    QUM-ARIQ MFY premium axborot portalining
+                    sayt yaratuvchisi. Zamonaviy, tezkor va
+                    mobil qurilmalarga mos veb-saytlar yaratish.
+                </p>
+
+
+                <div class="creator-contact">
+
+                    <a
+                        href="tel:+998951903181"
+                        class="creator-pill"
+                    >
+                        📞 +998 95 190 31 81
+                    </a>
+
+                    <button
+                        class="creator-pill"
+                        onclick="copyPhone('+998951903181')"
+                        id="btnCopyNum"
+                    >
+                        📋 Raqamni nusxalash
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="creator-avatar">
+                👨‍💻
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+<div class="container">
+
+    <div class="footer-grid">
+
+        <div class="footer-brand">
+            <div class="logo-title">🏘️ QUM-ARIQ MFY</div>
+            <p id="footerAbout">Qum-Ariq mahallasi fuqarolari hamda mehmonlari uchun yaratilgan rasmiy axborot va muloqot portali.</p>
+        </div>
+
+        <div>
+            <div class="footer-col-title" id="footerNavTitle">Navigatsiya</div>
+            <div class="footer-links">
+                <a href="#home" id="ftNavHome">Bosh sahifa</a>
+                <a href="#services" id="ftNavServices">Xizmatlar</a>
+                <a href="#contacts" id="ftNavContacts">Kontaktlar</a>
+                <a href="#hours" id="ftNavHours">Ish vaqti</a>
+                <a href="#location" id="ftNavLocation">Manzil</a>
+            </div>
+        </div>
+
+        <div>
+            <div class="footer-col-title" id="footerContactTitle">Aloqa</div>
+            <div class="footer-links">
+                <span id="ftAddress">📍 Obiraxmat ko'chasi, 23</span>
+                <span>📞 +998 (71) 215-84-24</span>
+                <span>📞 +998 (71) 251-41-45</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <div class="footer-copyright">
+            © <span id="year"></span> QUM-ARIQ MFY. <span id="footerRights">Barcha huquqlar himoyalangan.</span>
+        </div>
+        <div class="footer-creator-tag">
+            <span id="footerDev">Dasturchi:</span> <strong>Xojimurodov Jaloliddin</strong> (+998 95 190 31 81)
+        </div>
+    </div>
+
+</div>
+</footer>
+
+</main>
+
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav">
+
+    <button onclick="go('home')">
+        <span>⌂</span>
+        <span id="mbHome">Bosh sahifa</span>
+    </button>
+
+    <button onclick="go('contacts')">
+        <span>📞</span>
+        <span id="mbContacts">Kontaktlar</span>
+    </button>
+
+    <button onclick="openFavorites()">
+        <span>⭐</span>
+        <span id="mbFav">Saqlangan</span>
+    </button>
+
+    <button onclick="go('location')">
+        <span>📍</span>
+        <span id="mbLoc">Manzil</span>
+    </button>
+
+</div>
+
+
+<!-- FAVORITES MODAL -->
+<div
+    class="modal"
+    id="favoriteModal"
+    onclick="closeOutside(event)"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2 id="favModalTitle">
+                ⭐ Saqlangan kontaktlar
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeFavorites()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div id="favoriteList"></div>
+
+    </div>
+
+</div>
+
+<!-- LANGUAGE SELECTION MODAL -->
+<div
+    class="modal"
+    id="langModal"
+>
+    <div class="modal-box">
+        <div class="modal-head">
+            <h2 id="langModalTitle">Tilni tanlang / Выберите язык</h2>
+        </div>
+        <p style="color:var(--muted); font-size:12px;" id="langModalSub">Saytdan foydalanish uchun qulay tilni tanlang:</p>
+        
+        <div class="lang-options">
+            <button class="lang-btn" onclick="selectLanguage('uz')">
+                <span>O'zbekcha (Lotin)</span>
+                <span>UZ</span>
+            </button>
+            <button class="lang-btn" onclick="selectLanguage('uz_kr')">
+                <span>Ўзбекча (Кирилл)</span>
+                <span>ЎЗ</span>
+            </button>
+            <button class="lang-btn" onclick="selectLanguage('ru')">
+                <span>Русский</span>
+                <span>RU</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="toast" id="toast">
+    Bajarildi
+</div>
+
+
+<script>
+
+/* =========================================
+   TRANSLATIONS DATA (FULL 3 LANGUAGES)
+========================================= */
+
+const translations = {
+    uz: {
+        siteTitle: "QUM-ARIQ MFY | Mahalla Portali",
+        metaDesc: "QUM-ARIQ MFY — zamonaviy mahalla axborot portali",
+        navLogoTitle: "QUM-ARIQ MFY",
+        navLogoSub: "MAHALLA PORTALI",
+        navHome: "Bosh sahifa",
+        navServices: "Xizmatlar",
+        navContacts: "Kontaktlar",
+        navHours: "Ish vaqti",
+        navCreator: "Yaratuvchi",
+        heroTitle1: "QUM-ARIQ",
+        heroTitle2: "MAHALLASI",
+        heroDesc: "Qum-Ariq MFY aholisi uchun kerakli telefon raqamlari, xizmatlar, ish vaqti, manzil va muhim ma'lumotlarni zamonaviy yagona portal orqali toping.",
+        btnContacts: "📞 Kontaktlar",
+        btnServices: "⚡ Xizmatlar",
+        btnShare: "↗️ Ulashish",
+        labelCurrentTime: "HOZIRGI VAQT",
+        labelWorkHours: "MAHALLA ISH VAQTI",
+        lunchTimeText: "Tushlik: 13:00 — 14:00",
+        btnCallMahalla: "☎️ Mahalla bilan bog‘lanish",
+        servicesTitle: "⚡ Tezkor xizmatlar",
+        servicesDesc: "Kerakli xizmatni bir bosishda toping",
+        srvMahallaTitle: "Mahalla",
+        srvMahallaDesc: "Rais va mahalla xodimlari",
+        srvPoliTitle: "13-poliklinika",
+        srvPoliDesc: "Shifokor va registratura",
+        srvSchoolTitle: "269-maktab",
+        srvSchoolDesc: "Maktab direktori",
+        srvElecTitle: "Elektr",
+        srvElecDesc: "Elektr tarmog‘i va 1154",
+        srvWaterTitle: "Ichimlik suvi",
+        srvWaterDesc: "Suv xodimi",
+        srvGasTitle: "Gaz",
+        srvGasDesc: "Gaz xodimi",
+        srvPharmTitle: "Apteka",
+        srvPharmDesc: "Apteka xodimlari",
+        srvLocTitle: "Manzil",
+        srvLocDesc: "Qum-Ariq MFY",
+        contactsTitle: "📞 Kontaktlar",
+        contactsDesc: "Ism, lavozim yoki telefon orqali qidiring",
+        btnFavorites: "⭐ Saqlanganlar",
+        searchPlaceholder: "Masalan: rais, Aziza, maktab, 1154...",
+        fltAll: "Barchasi",
+        fltMahalla: "🏛️ Mahalla",
+        fltTibbiyot: "🏥 Tibbiyot",
+        fltMaktab: "🏫 Maktab",
+        fltXizmat: "🔧 Xizmatlar",
+        fltSoliq: "💼 Soliq",
+        fltCommunity: "👥 Guruh",
+        impTitle: "🚨 Muhim raqamlar",
+        impDesc: "Tezkor foydalanish uchun",
+        impElecTitle: "Elektr tarmog‘i",
+        impElecDesc: "Sergeli tumani elektr tarmog‘i",
+        impMahallaTitle: "Qum-Ariq MFY",
+        impMahallaDesc: "Asosiy telefon",
+        impAddTitle: "Qo‘shimcha telefon",
+        impAddDesc: "Qum-Ariq MFY",
+        btnCallText: "☎️ Qo‘ng‘iroq",
+        hoursTitle: "🕘 Ish vaqti",
+        hoursDesc: "Qum-Ariq MFY ish jadvali",
+        dayMon: "Dushanba",
+        dayTue: "Seshanba",
+        dayWed: "Chorshanba",
+        dayThu: "Payshanba",
+        dayFri: "Juma",
+        daySat: "Shanba",
+        daySun: "Yakshanba",
+        restText: "Dam olish",
+        labelTodayStatus: "BUGUNGI HOLAT",
+        hoursDetailDesc: "Ish kunlari 09:00 dan 18:00 gacha. Tushlik vaqti 13:00–14:00. Shanba va yakshanba dam olish kunlari.",
+        locTitle: "📍 Manzil",
+        locDesc: "Qum-Ariq MFY qo‘mitasi",
+        lblAddress: "MANZIL",
+        valAddress: "100160, Toshkent shahri, Sirg‘ali tumani, Obiraxmat ko‘chasi, 23",
+        lblLandmark: "MO‘LJAL",
+        valLandmark: "“POWER HIGH SCHOOL” xususiy maktab, 269-sonli maktab",
+        lblPhone: "TELEFON",
+        lblStir: "STIR",
+        btnOpenMap: "🗺️ Xaritani ochish",
+        btnDirections: "🚗 Yo‘nalish",
+        mapTextAddress: "Obiraxmat ko‘chasi, 23<br>Sirg‘ali tumani, Toshkent",
+        btnGetDir: "🚗 Yo‘nalish olish",
+        creatorName: "Xojimurodov Jaloliddin",
+        creatorDesc: "QUM-ARIQ MFY premium axborot portalining sayt yaratuvchisi. Zamonaviy, tezkor va mobil qurilmalarga mos veb-saytlar yaratish.",
+        btnCopyNum: "📋 Raqamni nusxalash",
+        footerAbout: "Qum-Ariq mahallasi fuqarolari hamda mehmonlari uchun yaratilgan rasmiy axborot va muloqot portali.",
+        footerNavTitle: "Navigatsiya",
+        ftNavHome: "Bosh sahifa",
+        ftNavServices: "Xizmatlar",
+        ftNavContacts: "Kontaktlar",
+        ftNavHours: "Ish vaqti",
+        ftNavLocation: "Manzil",
+        footerContactTitle: "Aloqa",
+        ftAddress: "📍 Obiraxmat ko'chasi, 23",
+        footerRights: "Barcha huquqlar himoyalangan.",
+        footerDev: "Dasturchi:",
+        mbHome: "Bosh sahifa",
+        mbContacts: "Kontaktlar",
+        mbFav: "Saqlangan",
+        mbLoc: "Manzil",
+        favModalTitle: "⭐ Saqlangan kontaktlar",
+        noFavTitle: "Saqlangan kontaktlar yo‘q",
+        noFavDesc: "Kontakt yonidagi ☆ tugmasini bosing.",
+        noContactFound: "Kontakt topilmadi",
+        noContactDesc: "Boshqa ma'lumot bilan qidirib ko‘ring.",
+        btnCallShort: "☎️ Qo‘ng‘iroq",
+        btnNotAvail: "⚠️ Mavjud emas",
+        btnCopyShort: "📋 Nusxa",
+        statusChecking: "Tekshirilmoqda...",
+        statusOpenNow: "Hozir ochiq",
+        statusClosedNow: "Hozir yopiq",
+        textOpen: "Ochiq",
+        textClosed: "Yopiq",
+        todayText: "Bugun",
+        toastCopied: "Raqam nusxalandi 📋",
+        toastNoNum: "Nusxalash uchun raqam yo‘q",
+        toastFavRemoved: "Kontakt olib tashlandi",
+        toastFavSaved: "Kontakt saqlandi ⭐",
+        toastShareCopied: "Sayt havolasi nusxalandi 🔗",
+        toastShareNotAvail: "Ulashish mavjud emas",
+        toastNoPhone: "Raqam kiritilmagan",
+        toastDone: "Bajarildi"
+    },
+    uz_kr: {
+        siteTitle: "ҚУМ-АРИҚ МФЙ | Маҳалла Портали",
+        metaDesc: "ҚУМ-АРИҚ МФЙ — замонавий маҳалла ахборот портали",
+        navLogoTitle: "ҚУМ-АРИҚ МФЙ",
+        navLogoSub: "МАҲАЛЛА ПОРТАЛИ",
+        navHome: "Бош саҳифа",
+        navServices: "Хизматлар",
+        navContacts: "Контактлар",
+        navHours: "Иш вақти",
+        navCreator: "Яратувчи",
+        heroTitle1: "ҚУМ-АРИҚ",
+        heroTitle2: "МАҲАЛЛАСИ",
+        heroDesc: "Қум-Ариқ МФЙ аҳолиси учун керакли телефон рақамлари, хизматлар, иш вақти, манзил ва муҳим маълумотларни замонавий ягона портал орқали топинг.",
+        btnContacts: "📞 Контактлар",
+        btnServices: "⚡ Хизматлар",
+        btnShare: "↗️ Улашиш",
+        labelCurrentTime: "ҲОЗИРГИ ВАҚТ",
+        labelWorkHours: "МАҲАЛЛА ИШ ВАҚТИ",
+        lunchTimeText: "Тушлик: 13:00 — 14:00",
+        btnCallMahalla: "☎️ Маҳалла билан боғланиш",
+        servicesTitle: "⚡ Тезкор хизматлар",
+        servicesDesc: "Керакли хизматни бир босишда топинг",
+        srvMahallaTitle: "Маҳалла",
+        srvMahallaDesc: "Раис ва маҳалла ходимлари",
+        srvPoliTitle: "13-поликлиника",
+        srvPoliDesc: "Шифокор ва регистратура",
+        srvSchoolTitle: "269-мактаб",
+        srvSchoolDesc: "Мактаб директори",
+        srvElecTitle: "Электр",
+        srvElecDesc: "Электр тармоғи ва 1154",
+        srvWaterTitle: "Ичимлик суви",
+        srvWaterDesc: "Сув ходими",
+        srvGasTitle: "Газ",
+        srvGasDesc: "Газ ходими",
+        srvPharmTitle: "Аптека",
+        srvPharmDesc: "Аптека ходимлари",
+        srvLocTitle: "Манзил",
+        srvLocDesc: "Қум-Ариқ МФЙ",
+        contactsTitle: "📞 Контактлар",
+        contactsDesc: "Исм, лавозим ёки телефон орқали қидиринг",
+        btnFavorites: "⭐ Сақланганлар",
+        searchPlaceholder: "Масалан: раис, Азиза, мактаб, 1154...",
+        fltAll: "Барчаси",
+        fltMahalla: "🏛️ Маҳалла",
+        fltTibbiyot: "🏥 Тиббиёт",
+        fltMaktab: "🏫 Мактаб",
+        fltXizmat: "🔧 Хизматлар",
+        fltSoliq: "💼 Солиқ",
+        fltCommunity: "👥 Гуруҳ",
+        impTitle: "🚨 Муҳим рақамлар",
+        impDesc: "Тезкор фойдаланиш учун",
+        impElecTitle: "Электр тармоғи",
+        impElecDesc: "Сергели тумани электр тармоғи",
+        impMahallaTitle: "Қум-Ариқ МФЙ",
+        impMahallaDesc: "Асосий телефон",
+        impAddTitle: "Қўшимча телефон",
+        impAddDesc: "Қум-Ариқ МФЙ",
+        btnCallText: "☎️ Қўнғироқ",
+        hoursTitle: "🕘 Иш вақти",
+        hoursDesc: "Қум-Ариқ МФЙ иш жадвали",
+        dayMon: "Душанба",
+        dayTue: "Сешанба",
+        dayWed: "Чоршанба",
+        dayThu: "Пайшанба",
+        dayFri: "Жума",
+        daySat: "Шанба",
+        daySun: "Якшанба",
+        restText: "Дам олиш",
+        labelTodayStatus: "ҲОЗИРГИ ҲОЛАТ",
+        hoursDetailDesc: "Иш кунлари 09:00 дан 18:00 гача. Тушлик вақти 13:00–14:00. Шанба ва якшанба дам олиш кунлари.",
+        locTitle: "📍 Манзил",
+        locDesc: "Қум-Ариқ МФЙ қўмитаси",
+        lblAddress: "МАНЗИЛ",
+        valAddress: "100160, Тошкент шаҳри, Сирғали тумани, Обирахмат кўчаси, 23",
+        lblLandmark: "МЎЛЖАЛ",
+        valLandmark: "“POWER HIGH SCHOOL” хусусий мактаб, 269-сонли мактаб",
+        lblPhone: "ТЕЛЕФОН",
+        lblStir: "СТИР",
+        btnOpenMap: "🗺️ Харитани очиш",
+        btnDirections: "🚗 Йўналиш",
+        mapTextAddress: "Обирахмат кўчаси, 23<br>Сирғали тумани, Тошкент",
+        btnGetDir: "🚗 Йўналиш олиш",
+        creatorName: "Хожимуродов Жалолиддин",
+        creatorDesc: "ҚУМ-АРИҚ МФЙ премиум ахборот порталининг сайт яратувчиси. Замонавий, тезкор ва мобил қурилмаларга мос веб-сайтлар яратиш.",
+        btnCopyNum: "📋 Рақамни нусхалаш",
+        footerAbout: "Қум-Ариқ маҳалласи фуқаролари ҳамда меҳмонлари учун яратилган расмий ахборот ва мулоқот портали.",
+        footerNavTitle: "Навигация",
+        ftNavHome: "Бош саҳифа",
+        ftNavServices: "Хизматлар",
+        ftNavContacts: "Контактлар",
+        ftNavHours: "Иш вақти",
+        ftNavLocation: "Манзил",
+        footerContactTitle: "Алоқа",
+        ftAddress: "📍 Обирахмат кўчаси, 23",
+        footerRights: "Барча ҳуқуқлар ҳимояланган.",
+        footerDev: "Дастурчи:",
+        mbHome: "Бош саҳифа",
+        mbContacts: "Контактлар",
+        mbFav: "Сақланган",
+        mbLoc: "Манзил",
+        favModalTitle: "⭐ Сақланган контактлар",
+        noFavTitle: "Сақланган контактлар йўқ",
+        noFavDesc: "Контакт ёнидаги ☆ тугмасини босинг.",
+        noContactFound: "Контакт топилмади",
+        noContactDesc: "Бошқа маълумот билан қидириб кўринг.",
+        btnCallShort: "☎️ Қўнғироқ",
+        btnNotAvail: "⚠️ мавжуд эмас",
+        btnCopyShort: "📋 Нусха",
+        statusChecking: "Текширилмоқда...",
+        statusOpenNow: "Ҳозир очиқ",
+        statusClosedNow: "Ҳозир ёпиқ",
+        textOpen: "Очиқ",
+        textClosed: "Ёпиқ",
+        todayText: "Бугун",
+        toastCopied: "Рақам нусхаланди 📋",
+        toastNoNum: "Нусхалаш учун рақам йўқ",
+        toastFavRemoved: "Контакт олиб ташланди",
+        toastFavSaved: "Контакт сақланди ⭐",
+        toastShareCopied: "Сайт ҳаволаси нусхаланди 🔗",
+        toastShareNotAvail: "Улашиш мавжуд эмас",
+        toastNoPhone: "Рақам киритилмаган",
+        toastDone: "Бажарилди"
+    },
+    ru: {
+        siteTitle: "СХМ КУМ-АРИК | Портал Махалли",
+        metaDesc: "СХМ КУМ-АРИК — современный информационный портал махалли",
+        navLogoTitle: "СХМ КУМ-АРИК",
+        navLogoSub: "ПОРТАЛ МАХАЛЛИ",
+        navHome: "Главная",
+        navServices: "Услуги",
+        navContacts: "Контакты",
+        navHours: "Режим работы",
+        navCreator: "Разработчик",
+        heroTitle1: "КУМ-АРИК",
+        heroTitle2: "МАХАЛЛЯ",
+        heroDesc: "Найдите необходимые номера телефонов, услуги, режим работы, адрес и важную информацию для жителей СХМ Кум-Арик через единый современный портал.",
+        btnContacts: "📞 Контакты",
+        btnServices: "⚡ Услуги",
+        btnShare: "↗️ Поделиться",
+        labelCurrentTime: "ТЕКУЩЕЕ ВРЕМЯ",
+        labelWorkHours: "РЕЖИМ РАБОТЫ МАХАЛЛИ",
+        lunchTimeText: "Обед: 13:00 — 14:00",
+        btnCallMahalla: "☎️ Связаться с махаллей",
+        servicesTitle: "⚡ Быстрые услуги",
+        servicesDesc: "Найдите нужную услугу в один клик",
+        srvMahallaTitle: "Махалля",
+        srvMahallaDesc: "Председатель и сотрудники",
+        srvPoliTitle: "13-я поликлиника",
+        srvPoliDesc: "Врач и регистратура",
+        srvSchoolTitle: "Школа №269",
+        srvSchoolDesc: "Директор школы",
+        srvElecTitle: "Электричество",
+        srvElecDesc: "Электросеть и 1154",
+        srvWaterTitle: "Питьевая вода",
+        srvWaterDesc: "Служба водоснабжения",
+        srvGasTitle: "Газ",
+        srvGasDesc: "Служба газоснабжения",
+        srvPharmTitle: "Аптека",
+        srvPharmDesc: "Сотрудники аптеки",
+        srvLocTitle: "Адрес",
+        srvLocDesc: "СХМ Кум-Арик",
+        contactsTitle: "📞 Контакты",
+        contactsDesc: "Поиск по имени, должности или телефону",
+        btnFavorites: "⭐ Избранное",
+        searchPlaceholder: "Например: председатель, Азиза, школа, 1154...",
+        fltAll: "Все",
+        fltMahalla: "🏛️ Махалля",
+        fltTibbiyot: "🏥 Медицина",
+        fltMaktab: "🏫 Школа",
+        fltXizmat: "🔧 Услуги",
+        fltSoliq: "💼 Налоги",
+        fltCommunity: "👥 Группа",
+        impTitle: "🚨 Важные номера",
+        impDesc: "Для экстренного использования",
+        impElecTitle: "Электросеть",
+        impElecDesc: "RЕS Сергелийского района",
+        impMahallaTitle: "СХМ Кум-Арик",
+        impMahallaDesc: "Основной телефон",
+        impAddTitle: "Дополнительный телефон",
+        impAddDesc: "СХМ Кум-Арик",
+        btnCallText: "☎️ Позвонить",
+        hoursTitle: "🕘 Режим работы",
+        hoursDesc: "График работы СХМ Кум-Арик",
+        dayMon: "Понедельник",
+        dayTue: "Вторник",
+        dayWed: "Среда",
+        dayThu: "Четверг",
+        dayFri: "Пятница",
+        daySat: "Суббота",
+        daySun: "Воскресенье",
+        restText: "Выходной",
+        labelTodayStatus: "СТАТУС НА СЕГОДНЯ",
+        hoursDetailDesc: "Рабочие дни с 09:00 до 18:00. Обед 13:00–14:00. Суббота и воскресенье — выходные дни.",
+        locTitle: "📍 Адрес",
+        locDesc: "Комитет СХМ Кум-Арик",
+        lblAddress: "АДРЕС",
+        valAddress: "100160, г. Ташкент, Сергелийский район, ул. Обирахмат, 23",
+        lblLandmark: "ОРИЕНТИР",
+        valLandmark: "Частная школа “POWER HIGH SCHOOL”, школа №269",
+        lblPhone: "ТЕЛЕФОН",
+        lblStir: "ИНН",
+        btnOpenMap: "🗺️ Открыть карту",
+        btnDirections: "🚗 Маршрут",
+        mapTextAddress: "ул. Обирахмат, 23<br>Сергелийский район, Ташкент",
+        btnGetDir: "🚗 Получить маршрут",
+        creatorName: "Хожимуродов Жалолиддин",
+        creatorDesc: "Создатель премиального информационного портала СХМ КУМ-АРИК. Разработка современных, быстрых и адаптивных веб-сайтов.",
+        btnCopyNum: "📋 Скопировать номер",
+        footerAbout: "Официальный информационный и коммуникационный портал, созданный для жителей и гостей махалли Кум-Арик.",
+        footerNavTitle: "Навигация",
+        ftNavHome: "Главная",
+        ftNavServices: "Услуги",
+        ftNavContacts: "Контакты",
+        ftNavHours: "Режим работы",
+        ftNavLocation: "Адрес",
+        footerContactTitle: "Контакты",
+        ftAddress: "📍 ул. Обирахмат, 23",
+        footerRights: "Все права защищены.",
+        footerDev: "Разработчик:",
+        mbHome: "Главная",
+        mbContacts: "Контакты",
+        mbFav: "Избранное",
+        mbLoc: "Адрес",
+        favModalTitle: "⭐ Избранные контакты",
+        noFavTitle: "Нет сохраненных контактов",
+        noFavDesc: "Нажмите кнопку ☆ рядом с контактом.",
+        noContactFound: "Контакт не найден",
+        noContactDesc: "Попробуйте поискать по другим данным.",
+        btnCallShort: "☎️ Вызов",
+        btnNotAvail: "⚠️ Недоступно",
+        btnCopyShort: "📋 Копия",
+        statusChecking: "Проверка...",
+        statusOpenNow: "Сейчас открыто",
+        statusClosedNow: "Сейчас закрыто",
+        textOpen: "Открыто",
+        textClosed: "Закрыто",
+        todayText: "Сегодня",
+        toastCopied: "Номер скопирован 📋",
+        toastNoNum: "Нет номера для копирования",
+        toastFavRemoved: "Контакт удален из избранного",
+        toastFavSaved: "Контакт сохранен ⭐",
+        toastShareCopied: "Ссылка на сайт скопирована 🔗",
+        toastShareNotAvail: "Функция поделиться недоступна",
+        toastNoPhone: "Номер не указан",
+        toastDone: "Готово"
+    }
+};
+
+/* =========================================
+   CONTACT DATA (WITH 3 LANGUAGES)
+========================================= */
+
+const contactsData = [
+{
+id:"1", category:"mahalla", icon:"👩‍💼", phone:"998776152",
+name: { uz:"Botayeva Arofat opa Abdumalikovna", uz_kr:"Ботаева Арофат опа Абдумаликовна", ru:"Ботаева Арофат Абдумаликовна" },
+role: { uz:"Qum-Ariq mahalla raisi", uz_kr:"Қум-Ариқ маҳалла раиси", ru:"Председатель махалли Кум-Арик" }
+},
+{
+id:"2", category:"mahalla", icon:"👨‍💼", phone:"994944264",
+name: { uz:"Ergashev Qaxramon Shamsudinovich", uz_kr:"Эргашев Қахрамон Шамсудинович", ru:"Эргашев Кахрамон Шамсудинович" },
+role: { uz:"Qum-Ariq MFY hokim yordamchisi", uz_kr:"Қум-Ариқ МФЙ ҳоким ёрдамчиси", ru:"Помощник хокима СХМ Кум-Арик" }
+},
+{
+id:"3", category:"mahalla", icon:"🧑‍💼", phone:"903911838",
+name: { uz:"Haydarova Aziza Oktamjon qizi", uz_kr:"Ҳайдарова Азиза Ўктамжон қизи", ru:"Хайдарова Азиза Уктамжон кизи" },
+role: { uz:"Qum-Ariq MFY yoshlar yetakchisi", uz_kr:"Қум-Ариқ МФЙ ёшлар етакчиси", ru:"Лидер молодежи СХМ Кум-Арик" }
+},
+{
+id:"4", category:"mahalla", icon:"👮", phone:"500774773",
+name: { uz:"Holov Navroz", uz_kr:"Ҳолов Навруз", ru:"Холов Навруз" },
+role: { uz:"Qum-Ariq MFY profilaktika inspektori", uz_kr:"Қум-Ариқ МФЙ профилактика инспектори", ru:"Инспектор профилактики СХМ Кум-Арик" }
+},
+{
+id:"5", category:"mahalla", icon:"👩", phone:"977159196",
+name: { uz:"Ismatova Maxmuda", uz_kr:"Исматова Махмуда", ru:"Исматова Махмуда" },
+role: { uz:"Qum-Ariq MFY xotin-qizlar faoli", uz_kr:"Қум-Ариқ МФЙ хотин-қизлар фаоли", ru:"Активистка по женским делам СХМ Кум-Арик" }
+},
+{
+id:"6", category:"tibbiyot", icon:"👩‍⚕️", phone:"909846767",
+name: { uz:"Maryam Abdulayevna", uz_kr:"Марьям Абдулаевна", ru:"Марьям Абдулаевна" },
+role: { uz:"13-poliklinika bosh shifokori", uz_kr:"13-поликлиника бош шифокори", ru:"Главный врач 13-й поликлиники" }
+},
+{
+id:"7", category:"tibbiyot", icon:"🏥", phone:"555129606",
+name: { uz:"Registratura", uz_kr:"Регистратура", ru:"Регистратура" },
+role: { uz:"13-poliklinika registraturasi", uz_kr:"13-поликлиника регистратураси", ru:"Регистратура 13-й поликлиники" }
+},
+{
+id:"8", category:"xizmat", icon:"🚐", phone:"909862942",
+name: { uz:"Yodgor opa", uz_kr:"Ёдгор опа", ru:"Ёдгор эже" },
+role: { uz:"Qum-Ariq MFY maxsus trans xodimi", uz_kr:"Қум-Ариқ МФЙ махсус транс ходими", ru:"Сотрудник спецтранса СХМ Кум-Арик" }
+},
+{
+id:"9", category:"soliq", icon:"💼", phone:"+998934914251",
+name: { uz:"Sayriddin", uz_kr:"Сайриддин", ru:"Сайриддин" },
+role: { uz:"Sergeli tuman davlat soliq inspektori", uz_kr:"Сергели туман давлат солиқ инспектори", ru:"Налоговый инспектор Сергелийского района" }
+},
+{
+id:"10", category:"maktab", icon:"👩‍🏫", phone:"+998998698041",
+name: { uz:"Intizor Mahmudova", uz_kr:"Интизор Маҳмудова", ru:"Интизор Махмудова" },
+role: { uz:"269-maktab direktori", uz_kr:"269-мактаб директори", ru:"Директор школы №269" }
+},
+{
+id:"11", category:"xizmat", icon:"💊", phone:"+998935623849",
+name: { uz:"Lola opa", uz_kr:"Лола опа", ru:"Лола эже" },
+role: { uz:"Qum-Ariq MFY apteka", uz_kr:"Қум-Ариқ МФЙ аптека", ru:"Аптека СХМ Кум-Арик" }
+},
+{
+id:"12", category:"xizmat", icon:"💊", phone:"+998977041218",
+name: { uz:"Ulugbek", uz_kr:"Улуғбек", ru:"Улугбек" },
+role: { uz:"Qum-Ariq MFY apteka", uz_kr:"Қум-Ариқ МФЙ аптека", ru:"Аптека СХМ Кум-Арик" }
+},
+{
+id:"13", category:"xizmat", icon:"💧", phone:"+998937111000",
+name: { uz:"Dilshod", uz_kr:"Дилшод", ru:"Дилшод" },
+role: { uz:"Ichimlik suv xodimi", uz_kr:"Ичимлик сув ходими", ru:"Сотрудник службы водоснабжения" }
+},
+{
+id:"14", category:"xizmat", icon:"🔥", phone:"+998977712021",
+name: { uz:"Bahtiyor aka", uz_kr:"Баҳтиёр ака", ru:"Бахтиёр ака" },
+role: { uz:"Gaz xodimi", uz_kr:"Газ ходими", ru:"Сотрудник службы газоснабжения" }
+},
+{
+id:"15", category:"xizmat", icon:"🧵", phone:"+998770821222",
+name: { uz:"Sayyora opa", uz_kr:"Сайёра опа", ru:"Сайёра эже" },
+role: { uz:"Atele mod", uz_kr:"Ателье мод", ru:"Ателье мод" }
+},
+{
+id:"16", category:"xizmat", icon:"⚡", phone:"712583860",
+name: { uz:"Elektr tarmog‘i", uz_kr:"Электр тармоғи", ru:"Электросеть" },
+role: { uz:"Sergeli tumani elektr tarmog‘i", uz_kr:"Сергели тумани электр тармоғи", ru:"Электросеть Сергелийского района" }
+},
+{
+id:"17", category:"xizmat", icon:"⚡", phone:"1154",
+name: { uz:"1154", uz_kr:"1154", ru:"1154" },
+role: { uz:"Elektr tarmog‘i qisqa raqami", uz_kr:"Электр тармоғи қисқа рақами", ru:"Короткий номер электросети" }
+},
+{
+id:"18", category:"community", icon:"📌", phone:"",
+name: { uz:"1", uz_kr:"1", ru:"1" },
+role: { uz:"Mahalla xizmati", uz_kr:"Маҳалла хизмати", ru:"Служба махалли" }
+},
+{
+id:"19", category:"community", icon:"📌", phone:"",
+name: { uz:"2", uz_kr:"2", ru:"2" },
+role: { uz:"Mahalla xizmati", uz_kr:"Маҳалла хизмати", ru:"Служба махалли" }
+}
+];
+
+/* =========================================
+   STATE & LANGUAGE HANDLING
+========================================= */
+
+let currentLang = localStorage.getItem("qumariqLang") || "";
+let filter = "all";
+let favorites = JSON.parse(localStorage.getItem("qumariqFavorites") || "[]");
+
+function applyLanguage(lang){
+    if(!translations[lang]) lang = "uz";
+    currentLang = lang;
+    localStorage.setItem("qumariqLang", lang);
+
+    const t = translations[lang];
+
+    // Set page text elements
+    document.getElementById("siteTitle").textContent = t.siteTitle;
+    document.getElementById("metaDesc").setAttribute("content", t.metaDesc);
+    document.getElementById("navLogoTitle").textContent = t.navLogoTitle;
+    document.getElementById("navLogoSub").textContent = t.navLogoSub;
+    document.getElementById("navHome").textContent = t.navHome;
+    document.getElementById("navServices").textContent = t.navServices;
+    document.getElementById("navContacts").textContent = t.navContacts;
+    document.getElementById("navHours").textContent = t.navHours;
+    document.getElementById("navCreator").textContent = t.navCreator;
+    
+    document.getElementById("langSelectorBtn").textContent = lang === "uz" ? "UZ" : (lang === "uz_kr" ? "ЎЗ" : "RU");
+
+    document.getElementById("heroTitle1").textContent = t.heroTitle1;
+    document.getElementById("heroTitle2").textContent = t.heroTitle2;
+    document.getElementById("heroDesc").textContent = t.heroDesc;
+    document.getElementById("btnContacts").textContent = t.btnContacts;
+    document.getElementById("btnServices").textContent = t.btnServices;
+    document.getElementById("btnShare").textContent = t.btnShare;
+
+    document.getElementById("labelCurrentTime").textContent = t.labelCurrentTime;
+    document.getElementById("labelWorkHours").textContent = t.labelWorkHours;
+    document.getElementById("lunchTimeText").textContent = t.lunchTimeText;
+    document.getElementById("btnCallMahalla").textContent = t.btnCallMahalla;
+
+    document.getElementById("servicesTitle").textContent = t.servicesTitle;
+    document.getElementById("servicesDesc").textContent = t.servicesDesc;
+    document.getElementById("srvMahallaTitle").textContent = t.srvMahallaTitle;
+    document.getElementById("srvMahallaDesc").textContent = t.srvMahallaDesc;
+    document.getElementById("srvPoliTitle").textContent = t.srvPoliTitle;
+    document.getElementById("srvPoliDesc").textContent = t.srvPoliDesc;
+    document.getElementById("srvSchoolTitle").textContent = t.srvSchoolTitle;
+    document.getElementById("srvSchoolDesc").textContent = t.srvSchoolDesc;
+    document.getElementById("srvElecTitle").textContent = t.srvElecTitle;
+    document.getElementById("srvElecDesc").textContent = t.srvElecDesc;
+    document.getElementById("srvWaterTitle").textContent = t.srvWaterTitle;
+    document.getElementById("srvWaterDesc").textContent = t.srvWaterDesc;
+    document.getElementById("srvGasTitle").textContent = t.srvGasTitle;
+    document.getElementById("srvGasDesc").textContent = t.srvGasDesc;
+    document.getElementById("srvPharmTitle").textContent = t.srvPharmTitle;
+    document.getElementById("srvPharmDesc").textContent = t.srvPharmDesc;
+    document.getElementById("srvLocTitle").textContent = t.srvLocTitle;
+    document.getElementById("srvLocDesc").textContent = t.srvLocDesc;
+
+    document.getElementById("contactsTitle").textContent = t.contactsTitle;
+    document.getElementById("contactsDesc").textContent = t.contactsDesc;
+    document.getElementById("btnFavorites").textContent = t.btnFavorites;
+    document.getElementById("search").placeholder = t.searchPlaceholder;
+
+    document.getElementById("fltAll").textContent = t.fltAll;
+    document.getElementById("fltMahalla").textContent = t.fltMahalla;
+    document.getElementById("fltTibbiyot").textContent = t.fltTibbiyot;
+    document.getElementById("fltMaktab").textContent = t.fltMaktab;
+    document.getElementById("fltXizmat").textContent = t.fltXizmat;
+    document.getElementById("fltSoliq").textContent = t.fltSoliq;
+    document.getElementById("fltCommunity").textContent = t.fltCommunity;
+
+    document.getElementById("impTitle").textContent = t.impTitle;
+    document.getElementById("impDesc").textContent = t.impDesc;
+    document.getElementById("impElecTitle").textContent = t.impElecTitle;
+    document.getElementById("impElecDesc").textContent = t.impElecDesc;
+    document.getElementById("impMahallaTitle").textContent = t.impMahallaTitle;
+    document.getElementById("impMahallaDesc").textContent = t.impMahallaDesc;
+    document.getElementById("impAddTitle").textContent = t.impAddTitle;
+    document.getElementById("impAddDesc").textContent = t.impAddDesc;
+    
+    document.querySelectorAll(".btnCallText").forEach(el => el.textContent = t.btnCallText);
+
+    document.getElementById("hoursTitle").textContent = t.hoursTitle;
+    document.getElementById("hoursDesc").textContent = t.hoursDesc;
+    document.getElementById("dayMon").textContent = t.dayMon;
+    document.getElementById("dayTue").textContent = t.dayTue;
+    document.getElementById("dayWed").textContent = t.dayWed;
+    document.getElementById("dayThu").textContent = t.dayThu;
+    document.getElementById("dayFri").textContent = t.dayFri;
+    document.getElementById("daySat").textContent = t.daySat;
+    document.getElementById("daySun").textContent = t.daySun;
+    document.querySelectorAll(".restText").forEach(el => el.textContent = t.restText);
+
+    document.getElementById("labelTodayStatus").textContent = t.labelTodayStatus;
+    document.getElementById("hoursDetailDesc").textContent = t.hoursDetailDesc;
+
+    document.getElementById("locTitle").textContent = t.locTitle;
+    document.getElementById("locDesc").textContent = t.locDesc;
+    document.getElementById("lblAddress").textContent = t.lblAddress;
+    document.getElementById("valAddress").textContent = t.valAddress;
+    document.getElementById("lblLandmark").textContent = t.lblLandmark;
+    document.getElementById("valLandmark").textContent = t.valLandmark;
+    document.getElementById("lblPhone").textContent = t.lblPhone;
+    document.getElementById("lblStir").textContent = t.lblStir;
+    document.getElementById("btnOpenMap").textContent = t.btnOpenMap;
+    document.getElementById("btnDirections").textContent = t.btnDirections;
+    document.getElementById("mapTextAddress").innerHTML = t.mapTextAddress;
+    document.getElementById("btnGetDir").textContent = t.btnGetDir;
+
+    document.getElementById("creatorName").textContent = t.creatorName;
+    document.getElementById("creatorDesc").textContent = t.creatorDesc;
+    document.getElementById("btnCopyNum").textContent = t.btnCopyNum;
+
+    document.getElementById("footerAbout").textContent = t.footerAbout;
+    document.getElementById("footerNavTitle").textContent = t.footerNavTitle;
+    document.getElementById("ftNavHome").textContent = t.ftNavHome;
+    document.getElementById("ftNavServices").textContent = t.ftNavServices;
+    document.getElementById("ftNavContacts").textContent = t.ftNavContacts;
+    document.getElementById("ftNavHours").textContent = t.ftNavHours;
+    document.getElementById("ftNavLocation").textContent = t.ftNavLocation;
+    document.getElementById("footerContactTitle").textContent = t.footerContactTitle;
+    document.getElementById("ftAddress").textContent = t.ftAddress;
+    document.getElementById("footerRights").textContent = t.footerRights;
+    document.getElementById("footerDev").textContent = t.footerDev;
+
+    document.getElementById("mbHome").textContent = t.mbHome;
+    document.getElementById("mbContacts").textContent = t.mbContacts;
+    document.getElementById("mbFav").textContent = t.mbFav;
+    document.getElementById("mbLoc").textContent = t.mbLoc;
+    document.getElementById("favModalTitle").textContent = t.favModalTitle;
+
+    updateTime();
+    renderContacts();
+}
+
+function selectLanguage(lang){
+    applyLanguage(lang);
+    document.getElementById("langModal").classList.remove("show");
+}
+
+function openLangModal(){
+    document.getElementById("langModal").classList.add("show");
+}
+
+/* Check language on initial load */
+if(!currentLang){
+    openLangModal();
+    applyLanguage("uz");
+} else {
+    applyLanguage(currentLang);
+}
+
+/* =========================================
+   PHONE FORMATTING
+========================================= */
+
+function normalizePhone(phone){
+    let p = String(phone).replace(/[^\d+]/g,"");
+    if(p.startsWith("+998")) return p;
+    if(p.length === 9) return "+998" + p;
+    if(p.length === 4) return p;
+    return null;
+}
+
+function prettyPhone(phone){
+    const p = normalizePhone(phone);
+    if(!p) return phone;
+    if(p === "1154") return "1154";
+    if(p.length === 13){
+        return "+998 " + p.slice(4,6) + " " + p.slice(6,9) + " " + p.slice(9,11) + " " + p.slice(11,13);
+    }
+    return phone;
+}
+
+/* =========================================
+   CONTACT RENDER
+========================================= */
+
+function renderContacts(){
+    const t = translations[currentLang] || translations.uz;
+    const grid = document.getElementById("contactsGrid");
+    const input = document.getElementById("search");
+    const query = input.value.trim().toLowerCase();
+
+    document.getElementById("clear").style.display = query ? "block" : "none";
+
+    const list = contactsData.filter(c => {
+        const category = filter === "all" || c.category === filter;
+        const cName = c.name[currentLang] || c.name.uz;
+        const cRole = c.role[currentLang] || c.role.uz;
+
+        const search = !query ||
+            cName.toLowerCase().includes(query) ||
+            cRole.toLowerCase().includes(query) ||
+            c.phone.toLowerCase().includes(query);
+
+        return category && search;
+    });
+
+    if(!list.length){
+        grid.innerHTML = `
+            <div style="
+                grid-column:1/-1;
+                text-align:center;
+                padding:50px 20px;
+                border:1px dashed var(--line);
+                border-radius:20px;
+                color:var(--muted);
+            ">
+                <div style="font-size:42px;">🔎</div>
+                <strong>${t.noContactFound}</strong>
+                <p style="font-size:11px;margin-top:7px;">
+                    ${t.noContactDesc}
+                </p>
+            </div>
+        `;
+        return;
+    }
+
+    grid.innerHTML = list.map(c => {
+        const phone = normalizePhone(c.phone);
+        const fav = favorites.includes(c.id);
+        const nameText = c.name[currentLang] || c.name.uz;
+        const roleText = c.role[currentLang] || c.role.uz;
+
+        return `
+        <article class="contact reveal visible">
+            <div class="contact-top">
+                <div class="avatar">${c.icon}</div>
+                <button
+                    class="star ${fav ? "active" : ""}"
+                    onclick="toggleFavorite('${c.id}')"
+                >
+                    ${fav ? "★" : "☆"}
+                </button>
+            </div>
+
+            <div class="contact-name">${escapeHTML(nameText)}</div>
+            <div class="contact-role">${escapeHTML(roleText)}</div>
+            <div class="phone">${escapeHTML(prettyPhone(c.phone))}</div>
+
+            <div class="contact-buttons">
+                ${
+                    phone ?
+                    `<a href="tel:${phone}" class="small-btn call">${t.btnCallShort}</a>` :
+                    `<button class="small-btn" onclick="toast('${t.toastNoPhone}')">${t.btnNotAvail}</button>`
+                }
+                <button class="small-btn" onclick="copyPhone('${escapeAttr(c.phone)}')">${t.btnCopyShort}</button>
+            </div>
+        </article>
+        `;
+    }).join("");
+}
+
+/* =========================================
+   FILTER
+========================================= */
+
+function setFilter(value){
+    filter = value;
+    document.querySelectorAll(".filter").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.filter === value);
+    });
+    renderContacts();
+}
+
+/* =========================================
+   FAVORITES
+========================================= */
+
+function toggleFavorite(id){
+    const t = translations[currentLang] || translations.uz;
+    if(favorites.includes(id)){
+        favorites = favorites.filter(x => x !== id);
+        toast(t.toastFavRemoved);
+    }else{
+        favorites.push(id);
+        toast(t.toastFavSaved);
+    }
+    localStorage.setItem("qumariqFavorites", JSON.stringify(favorites));
+    renderContacts();
+}
+
+function openFavorites(){
+    const t = translations[currentLang] || translations.uz;
+    const modal = document.getElementById("favoriteModal");
+    const list = document.getElementById("favoriteList");
+
+    const saved = contactsData.filter(c => favorites.includes(c.id));
+
+    if(!saved.length){
+        list.innerHTML = `
+            <div style="
+                text-align:center;
+                color:var(--muted);
+                padding:35px 10px;
+            ">
+                <div style="font-size:40px;">⭐</div>
+                <strong>${t.noFavTitle}</strong>
+                <p style="font-size:11px;margin-top:7px;">${t.noFavDesc}</p>
+            </div>
+        `;
+    }else{
+        list.innerHTML = saved.map(c => {
+            const phone = normalizePhone(c.phone);
+            const nameText = c.name[currentLang] || c.name.uz;
+            const roleText = c.role[currentLang] || c.role.uz;
+
+            return `
+            <div style="
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:12px;
+                padding:14px 0;
+                border-bottom:1px solid var(--line);
+            ">
+                <div>
+                    <strong style="font-size:12px;">${c.icon} ${escapeHTML(nameText)}</strong>
+                    <div style="color:var(--muted);font-size:10px;margin-top:4px;">${escapeHTML(roleText)}</div>
+                    <div style="font-size:11px;margin-top:5px;">${escapeHTML(prettyPhone(c.phone))}</div>
+                </div>
+
+                <div style="display:flex;gap:5px;">
+                    ${phone ? `<a href="tel:${phone}" class="small-btn call" style="flex:none;">☎️</a>` : ""}
+                    <button class="small-btn" style="flex:none;" onclick="copyPhone('${escapeAttr(c.phone)}')">📋</button>
+                </div>
+            </div>
+            `;
+        }).join("");
+    }
+    modal.classList.add("show");
+}
+
+function closeFavorites(){
+    document.getElementById("favoriteModal").classList.remove("show");
+}
+
+function closeOutside(e){
+    if(e.target.id === "favoriteModal") closeFavorites();
+}
+
+/* =========================================
+   COPY
+========================================= */
+
+async function copyPhone(phone){
+    const t = translations[currentLang] || translations.uz;
+    if(!phone){
+        toast(t.toastNoNum);
+        return;
+    }
+
+    const value = prettyPhone(phone);
+    try{
+        await navigator.clipboard.writeText(value);
+        toast(t.toastCopied);
+    }catch(e){
+        const textarea = document.createElement("textarea");
+        textarea.value = value;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+        toast(t.toastCopied);
+    }
+}
+
+/* =========================================
+   SEARCH
+========================================= */
+
+function clearSearch(){
+    document.getElementById("search").value = "";
+    renderContacts();
+}
+
+/* =========================================
+   THEME
+========================================= */
+
+function toggleTheme(){
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme",next);
+    localStorage.setItem("qumariqTheme",next);
+}
+
+const savedTheme = localStorage.getItem("qumariqTheme");
+if(savedTheme){
+    document.documentElement.setAttribute("data-theme",savedTheme);
+}
+
+/* =========================================
+   CLOCK & STATUS
+========================================= */
+
+function updateTime(){
+    const t = translations[currentLang] || translations.uz;
+    const now = new Date();
+
+    const h = String(now.getHours()).padStart(2,"0");
+    const m = String(now.getMinutes()).padStart(2,"0");
+    const s = String(now.getSeconds()).padStart(2,"0");
+
+    document.getElementById("clock").textContent = `${h}:${m}:${s}`;
+
+    const dateLangCode = currentLang === "ru" ? "ru-RU" : (currentLang === "uz_kr" ? "ru-RU" : "uz-UZ");
+    document.getElementById("date").textContent = now.toLocaleDateString(dateLangCode, {
+        day:"2-digit", month:"long", year:"numeric"
+    });
+
+    const daysMap = {
+        uz: ["Yakshanba", "Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"],
+        uz_kr: ["Якшанба", "Душанба", "Сешанба", "Чоршанба", "Пайшанба", "Жума", "Шанба"],
+        ru: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
+    };
+
+    const day = now.getDay();
+    document.getElementById("today").textContent = daysMap[currentLang][day];
+
+    document.querySelectorAll(".day").forEach(row => {
+        row.classList.toggle("today", Number(row.dataset.day) === day);
+    });
+
+    const minutes = now.getHours() * 60 + now.getMinutes();
+    const weekday = day >= 1 && day <= 5;
+    const work = minutes >= 540 && minutes < 1080 && !(minutes >= 780 && minutes < 840);
+    const isOpen = weekday && work;
+
+    const text = document.getElementById("openText");
+    const status = document.getElementById("statusText");
+    const dot = document.querySelector(".status-dot");
+    const todayBig = document.getElementById("todayBig");
+
+    if(isOpen){
+        text.textContent = t.textOpen;
+        text.classList.remove("closed");
+        status.textContent = t.statusOpenNow;
+        dot.classList.remove("closed");
+        todayBig.textContent = "⚪ " + t.statusOpenNow;
+    }else{
+        text.textContent = t.textClosed;
+        text.classList.add("closed");
+        status.textContent = t.statusClosedNow;
+        dot.classList.add("closed");
+        todayBig.textContent = "⚫ " + t.statusClosedNow;
+    }
+}
+
+setInterval(updateTime,1000);
+
+/* =========================================
+   MAP & DIRECTIONS
+========================================= */
+
+function openMap(){
+    const query = "Qum-Ariq MFY Obiraxmat ko'chasi 23 Toshkent";
+    window.open("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query), "_blank");
+}
+
+function openDirections(){
+    const destination = "Qum-Ariq MFY Obiraxmat ko'chasi 23 Toshkent";
+    window.open("https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(destination), "_blank");
+}
+
+/* =========================================
+   SHARE
+========================================= */
+
+async function shareSite(){
+    const t = translations[currentLang] || translations.uz;
+    if(navigator.share){
+        try{
+            await navigator.share({
+                title: t.siteTitle,
+                text: t.metaDesc,
+                url: location.href
+            });
+        }catch(e){}
+    }else{
+        try{
+            await navigator.clipboard.writeText(location.href);
+            toast(t.toastShareCopied);
+        }catch(e){
+            toast(t.toastShareNotAvail);
+        }
+    }
+}
+
+/* =========================================
+   MOBILE NAV & UTILS
+========================================= */
+
+function toggleMenu(){
+    document.getElementById("navLinks").classList.toggle("show");
+}
+
+function go(id){
+    document.getElementById(id).scrollIntoView({ behavior:"smooth" });
+}
+
+let toastTimer;
+function toast(message){
+    const element = document.getElementById("toast");
+    element.textContent = message;
+    element.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+        element.classList.remove("show");
+    }, 2500);
+}
+
+function escapeHTML(value){
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function escapeAttr(value){
+    return String(value)
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'");
+}
+
+/* REVEAL OBSERVER */
+const observer = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.classList.add("visible");
+            }
+        });
+    },
+    { threshold:.08 }
+);
+
+document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+/* YEAR */
+document.getElementById("year").textContent = new Date().getFullYear();
+
+</script>
+
+</body>
+</html>
